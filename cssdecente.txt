@@ -1,0 +1,137 @@
+body {
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #7cd6d6, #efeff1);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+h1 {
+    color: #333;
+    font-size: 4vw;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px auto 10px auto;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.2); 
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;   /* elementi uno sotto l'altro */
+    align-items: center;      /* centrare in orizzontale */
+    margin-top: 40px;         /* distanza dall’alto */
+    width: 100%;
+    max-width: 500px; /* massimo della larghezza della To-Do List */
+    margin: 40px auto 0 auto;
+    gap: 15px;                /* distanza automatica tra input e bottone */
+}
+
+.buttonContainer {
+    display: flex;            
+    flex-direction: row;
+    gap: 10px;                
+    width: fit-content;              
+    justify-content: center;      
+}
+
+#taskInput {
+    width: 100%;               /* si adatta alla larghezza della pagina */
+    box-sizing: border-box;
+    padding: 15px 20px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: gray;
+}
+
+.deleteBtn {
+    background: none;
+    border: none;
+    color: red;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.addBtn, .clearBtn {
+    flex: 1;                 /* bottoni crescono per occupare lo spazio disponibile */
+    min-width: 120px;        /* non diventano troppo piccoli */
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.2s;
+}
+
+/* Colori distinti */
+.addBtn {
+    background-color: #4CAF50;    
+    color: white;
+}
+
+.addBtn:hover {
+    background-color: #45a049;
+}
+
+.clearBtn {
+    background-color: #e74c3c;    
+    color: white;
+}
+
+.clearBtn:hover {
+    background-color: #c0392b;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+}
+
+.filters button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.filters button:hover {
+    background-color: #2980b9;
+}
+
+
+
+
+
+function saveTasks() {
+  const tasks = [];
+  document.querySelectorAll("#taskList li").forEach(li => {
+    tasks.push({
+      text: li.querySelector(".taskText").textContent.trim(),
+      completed: li.classList.contains("completed"),
+      timestamp: li.querySelector("small").textContent.includes("Creato")
+        ? new Date(li.querySelector("small").textContent.replace("Creato: ", "")).toISOString()
+        : new Date(li.querySelector("small").textContent.replace("Modificato: ", "")).toISOString(),
+      modified: li.querySelector("small").textContent.includes("Modificato: ")
+    });
+  });
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function loadTasks() {
+  const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  tasks.forEach(task => {
+    addTask(task.text, task.completed, task.timestamp, task.modified);
+  });
+}
+
+window.onload = loadTasks;

@@ -1,0 +1,287 @@
+body {
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #ccd68b, #e1e6ee);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+h1 {
+    color: #333;
+    font-size: 4rem;
+    text-align: center;
+    margin: 20px auto 10px auto;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.taskBox {
+    background: #fefefe;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    width: 100%;
+    max-width: 500px; /* limite per desktop */
+    text-align: center;
+}
+
+#taskInput {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #050000;
+    margin-bottom: 15px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.buttonContainer {
+    display: flex;
+    flex-wrap: wrap; /* se lo spazio non basta, i bottoni vanno a capo */
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+button {
+    flex: 1;
+    min-width: 120px; /* i bottoni non diventano troppo piccoli */
+    padding: 12px 15px;
+    font-size: 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+.addBtn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.addBtn:hover {
+    background-color: #45a049;
+}
+
+.clearBtn {
+    background-color: #f44336;
+    color: white;
+}
+
+.clearBtn:hover {
+    background-color: #e53935;
+}
+
+.filters {
+    margin: 15px 0;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap; /* su mobile i bottoni filtro vanno a capo */
+    justify-content: center;
+}
+
+.filterBtn {
+    background: #eee;
+    color: #333;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    flex: 1;
+    min-width: 90px;
+}
+
+.filterBtn:hover {
+    background: #ddd;
+}
+
+#taskCount {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+/* --- LISTA TASK --- */
+#taskList {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+  text-align: left;
+}
+
+/* 🔁 Manteniamo i colori alternati */
+#taskList li:nth-child(4n+1) {
+  background: #fef6e4; /* tenue giallino/beige */
+}
+#taskList li:nth-child(4n+2) {
+  background: #e3f2fd; /* tenue azzurrino */
+}
+#taskList li:nth-child(4n+3) {
+  background: #f3e5f5; /* tenue violetto */
+}
+#taskList li:nth-child(4n+4) {
+  background: #e8f5e9; /* tenue verdino */
+}
+
+/* 💡 Card più compatta */
+#taskList li {
+  display: flex;           
+  padding: 12px 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  transition: 0.2s ease;
+  align-items: stretch;
+}
+
+/* Layout principale */
+.taskContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  flex: 1;
+  gap: 14px;
+}
+
+/* 📄 Testo + data */
+.taskLeft {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* centra verticalmente il testo breve */
+  flex: 1;
+  position: relative;
+}
+
+.taskText {
+  font-size: 20px;
+  font-weight: 500;
+  word-break: break-word;
+  text-align: center;
+  padding-bottom: 15px; /* spazio per la data */
+}
+
+.taskDate {
+  font-size: 12px;
+  color: #777;
+  position: absolute;     
+  bottom: 0;
+  left: 0;
+}
+
+/* | Separatore */
+.taskSeparator {
+  width: 1.5px;
+  background: rgba(0,0,0,0.15);
+  border-radius: 1px;
+}
+
+/* 🎯 Pulsanti più piccoli e ravvicinati */
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px; /* meno spazio verticale */
+}
+
+.completeBtn, .editBtn, .deleteBtn {
+  background: none;
+  border: none;
+  font-size: 18px; /* più piccolo */
+  padding: 4px;
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+  border-radius: 6px;
+}
+
+.completeBtn:hover,
+.editBtn:hover,
+.deleteBtn:hover {
+  background: rgba(0,0,0,0.08);
+  transform: scale(1.1);
+}
+
+.completeBtn { color: #2e7d32; }
+.editBtn { color: #1565c0; }
+.deleteBtn { color: #c62828; }
+
+/* Quando completato: sfoca SOLO testo e separator */
+.completed .taskLeft,
+.completed .taskSeparator {
+  filter: blur(1px);
+  opacity: 0.6;
+}
+
+/* Sfondo grigio */
+.completed {
+  background: #e0e0e0 !important;
+  transition: 0.3s ease;
+}
+
+/* Quando completato, disattiva interazioni sul testo */
+.completed .taskText {
+  pointer-events: none;
+}
+
+/* ❌ Nascondi data quando completato */
+.completed .taskDate {
+  display: none;
+}
+
+/* Nasconde i pulsanti originali */
+.completed .buttonGroup {
+  display: none;
+}
+
+/* Mostra il pulsante di annullamento */
+.completed .undoGroup {
+  display: flex;
+}
+
+/* ✅ Rendi il pulsante annulla visibile e non sfocato */
+.completed .undoGroup,
+.completed .undoGroup * {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+
+.undoGroup {
+  display: none; /* nascosto finché non è completato */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.undoBtn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  color: #1565c0;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.undoBtn:hover {
+  background: rgba(0,0,0,0.08);
+  transform: scale(1.1);
+}
